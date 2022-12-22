@@ -31,22 +31,22 @@ export const init = async () => {
   isInitialized = true;
 };
 
-export async function setHash(value) {
+export async function setRoom(address, owner, hashedFile, idRoom) {
   if (!isInitialized) {
     await init();
   }
 
   return roomsContract.methods
-    .setRoomInfo(2, "test", "test")
+    .setRoomInfo(address, owner, hashedFile, idRoom)
     .send({ from: selectedAccount });
 }
 
-export async function readHash() {
+export async function getRoomInfo(address) {
   if (!isInitialized) {
     await init();
   }
 
-  return roomsContract.methods.getRoomInfo().call((err, result) => {
+  return roomsContract.methods.getRoomInfo(address).call((err, result) => {
     console.log("stored cid in smart contract:", result);
   });
 }

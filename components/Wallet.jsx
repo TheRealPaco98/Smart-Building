@@ -34,7 +34,7 @@ const Wallet = () => {
               <p>
                 <span className="mr-5">Balance</span>
                 <span className="px-2 py-1 rounded-full bg-secondary hover:bg-gray-300 font-mono font-medium cursor-pointer duration-100">
-                  {`${networkMetadata.symbol} ${balance.formatted} `}
+                  {`${networkMetadata?.symbol} ${balance?.formatted} `}
                 </span>
               </p>
               <div className="card-actions justify-end">

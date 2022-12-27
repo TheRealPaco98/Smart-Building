@@ -47,6 +47,6 @@ export async function getRoomInfo(address) {
   }
 
   return roomsContract.methods.getRoomInfo(address).call((err, result) => {
-    console.log("stored cid in smart contract:", result);
+    console.log("stored rooms in smart contract:", result);
   });
 }

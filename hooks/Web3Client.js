@@ -3,7 +3,8 @@ import Web3 from "web3";
 let selectedAccount;
 let roomsContract;
 let isInitialized = false;
-
+let currentBlock;
+let n;
 export const init = async () => {
   let provider = window.ethereum;
 
@@ -29,7 +30,29 @@ export const init = async () => {
     RoomsBuild.networks[networkId].address
   );
   isInitialized = true;
-};
+
+  let block = await web3.eth.getBlock('latest');
+  let currentBlock = block.number;
+  
+     async function showTransactions(){
+      for(var i = currentBlock; i>=0; --i){
+
+      let block = await web3.eth.getBlock(i);
+      if(block != null) {
+        if(block.transactions != null && block.transactions.length != 0){
+          let hash = block.transactions;
+        
+          let tx = await web3.eth.getTransaction(hash);
+          if(tx.to != null){
+            console.log('block number : ', i, ';transaction done on ', block.timestamp, ' from ', tx.from, ' to ', tx.to)
+          }
+        }
+        
+      }
+    }
+  }
+  showTransactions();
+}
 
 export async function setRoom(address, owner, hashedFile, idRoom) {
   if (!isInitialized) {

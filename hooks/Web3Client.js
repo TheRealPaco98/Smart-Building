@@ -46,6 +46,7 @@ export async function showTransactions() {
       
         let tx = await web3.eth.getTransaction(hash);
         if(tx.to != null){
+          
           console.log('block number : ', i, ';transaction done on ', block.timestamp, ' from ', tx.from, ' to ', tx.to)
         }
       }

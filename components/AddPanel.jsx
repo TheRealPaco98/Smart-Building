@@ -20,15 +20,16 @@ const AddPanel = ({onClosePanel}) => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [file, setFile] = useState("");
     const [owner, setOwner] = useState("");
+    const [idRoom, setIdRoom] = useState("");
 
     //FUNCTIONS
     function setCid(hashedFile) {
-        const idRoom = Math.floor(Math.random() * 10000);
         setRoom(address, owner, hashedFile, idRoom)
             .then((tx) => {
                 console.log(tx);
                 setFile("")
                 setOwner("")
+                setIdRoom("")
                 setIsLoading(false);
                 onClosePanel(true);
             })
@@ -86,6 +87,15 @@ const AddPanel = ({onClosePanel}) => {
                     value={owner}
                     onChange={($event) => setOwner($event.target.value.trim())}
                     placeholder="Insert Owner"
+                    className="input input-bordered input-secondary w-full max-w-xs"
+                />
+            </div>
+            <div className="flex gap-10 mb-10">
+                <input
+                    type="text"
+                    value={idRoom}
+                    onChange={($event) => setIdRoom($event.target.value.trim())}
+                    placeholder="Insert Room ID"
                     className="input input-bordered input-secondary w-full max-w-xs"
                 />
             </div>

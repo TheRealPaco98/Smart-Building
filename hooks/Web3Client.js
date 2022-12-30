@@ -31,27 +31,26 @@ export const init = async () => {
   );
   isInitialized = true;
 
+}
+
+export async function showTransactions() {
+  const web3 = new Web3(window.ethereum);
   let block = await web3.eth.getBlock('latest');
   let currentBlock = block.number;
-  
-     async function showTransactions(){
-      for(var i = currentBlock; i>=0; --i){
+  for(var i = currentBlock; i>=0; --i){
 
-      let block = await web3.eth.getBlock(i);
-      if(block != null) {
-        if(block.transactions != null && block.transactions.length != 0){
-          let hash = block.transactions;
-        
-          let tx = await web3.eth.getTransaction(hash);
-          if(tx.to != null){
-            console.log('block number : ', i, ';transaction done on ', block.timestamp, ' from ', tx.from, ' to ', tx.to)
-          }
+    let block = await web3.eth.getBlock(i);
+    if(block != null) {
+      if(block.transactions != null && block.transactions.length != 0){
+        let hash = block.transactions;
+      
+        let tx = await web3.eth.getTransaction(hash);
+        if(tx.to != null){
+          console.log('block number : ', i, ';transaction done on ', block.timestamp, ' from ', tx.from, ' to ', tx.to)
         }
-        
       }
     }
   }
-  showTransactions();
 }
 
 export async function setRoom(address, owner, hashedFile, idRoom) {

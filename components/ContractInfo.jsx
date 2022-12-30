@@ -1,7 +1,7 @@
 import {getRoomInfo} from "../hooks/Web3Client";
 import {useWeb3} from "@3rdweb/hooks";
 import {useEffect, useState} from "react";
-import { getTransactions } from "../hooks/Web3Client";
+import { showTransactions } from "../hooks/Web3Client";
  
 
 const ContractInfo =  () => {
@@ -31,6 +31,11 @@ const ContractInfo =  () => {
             });
     }
 
+    function handleClick(e) {
+        e.preventDefault();
+        showTransactions();
+    }
+
  
 
     useEffect(() => {
@@ -43,7 +48,7 @@ const ContractInfo =  () => {
     return <div>
     {contracts && contracts.map(contract => (
         <div key={contract.roomID} className="my-10 card w-100 bg-neutral text-neutral-content">
-            <div className="card-body gap-6">
+            <div className="card-body gap-6" >
             <h2 className="card-title self-center">Room <span className="badge badge-secondary">#{contract.roomID}</span></h2>
                 <div className="flex justify-between items-center">
                     <div className="text-center">
@@ -63,6 +68,13 @@ const ContractInfo =  () => {
                                 className="btn btn-outline"
                                 onClick={() => window.open(`https://${contract.roomHash}.ipfs.w3s.link`, '_blank')}>
                                 Download
+                            </button>
+                        </div>
+                        <div>
+                        <button
+                                className="btn btn-outline"
+                                onClick={handleClick}>
+                                SHOW TRANSACTIONS
                             </button>
                         </div>
                 </div>

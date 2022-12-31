@@ -52,18 +52,6 @@ const Dashboard = () => {
                     onClosePanel={doClosePanel}
                 />
             }
-            {/*<form onSubmit={handleSubmit}>*/}
-            {/*  <input*/}
-            {/*    type="file"*/}
-            {/*    id="csvFile"*/}
-            {/*    accept=".csv"*/}
-            {/*    onChange={handleCaptureFile}*/}
-            {/*  ></input>*/}
-            {/*  <input type="submit"></input>*/}
-            {/*</form>*/}
-            {/*<div className="container">*/}
-            {/*  <button onClick={readHash}>HASH</button>*/}
-            {/*</div>*/}
         </div>}
     </>
   );

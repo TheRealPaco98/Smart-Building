@@ -1,8 +1,7 @@
 import {getRoomInfo} from "../hooks/Web3Client";
 import {useWeb3} from "@3rdweb/hooks";
 import {useEffect, useState} from "react";
-import { showTransactions } from "../hooks/Web3Client";
- 
+import TransactionPanel from "@components/TransactionPanel"
 
 const ContractInfo =  () => {
     //WEB3
@@ -16,10 +15,15 @@ const ContractInfo =  () => {
 
     //STATE
     const [contracts, setContracts] = useState([]);
-
+    const [showTransactionPanel,setShowTransactionPanel] = useState(false);
  
 
     //FUNCTIONS
+
+    const doClosePanel = () => {
+        setShowTransactionPanel(false);
+    }
+
     const getRoom = () => {
         getRoomInfo(address)
             .then((response) => {
@@ -29,14 +33,7 @@ const ContractInfo =  () => {
             .catch((err) => {
                 console.log(err);
             });
-    }
-
-    function handleClick(e) {
-        e.preventDefault();
-        showTransactions();
-    }
-
- 
+    } 
 
     useEffect(() => {
         if (address) {
@@ -72,12 +69,22 @@ const ContractInfo =  () => {
                         </div>
                         <div>
                         <button
-                                className="btn btn-outline"
-                                onClick={handleClick}>
-                                SHOW TRANSACTIONS
-                            </button>
+                            className={showTransactionPanel ? "btn btn-secondary" : "btn btn-outline"}
+                            onClick={() => (setShowTransactionPanel(!showTransactionPanel))}
+                            >
+                            {
+                                !showTransactionPanel ? <span>SHOW TRANSACTIONS</span> : <span>CLOSE PANEL</span>
+                            }
+                        </button>
                         </div>
                 </div>
+            </div>
+            <div>
+            {showTransactionPanel &&
+                <TransactionPanel
+                    onClosePanel={doClosePanel}
+                />
+            }
             </div>
         </div>))}
     </div>

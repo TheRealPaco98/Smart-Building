@@ -38,27 +38,36 @@ export const init = async () => {
 
 export async function getTransaction() {
   const web3 = new Web3(window.ethereum);
-  let block = await web3.eth.getBlock('latest');
-  let currentBlock = block.number;
-  for (var i = currentBlock; i >= 0; --i) {
-    let block = await web3.eth.getBlock(i);
+  let currentBlock =  await web3.eth.getBlockNumber();
+  console.log(currentBlock);
+  var transactions = []
+  for (var i = currentBlock; i >= currentBlock-5; i--) {
+    var block = await web3.eth.getBlock(i);
     if (block != null) {
       if (block.transactions != null && block.transactions.length != 0) {
-        let blockHash = block.transactions;
-        let tx = await web3.eth.getTransaction(blockHash);
+        var blockHash =  block.transactions;
+        var tx = await web3.eth.getTransaction(blockHash);
         if (tx.to != null) {
-          const txHash = tx.hash;
-          const from = tx.from;
-          const date = new Date(block.timestamp);
-          const ts = date.toLocaleString();
+          console.log(transactions)
+          var txHash = tx.hash;
+          var from = tx.from;
+          var date = new Date(block.timestamp*1000);
+          var ts = date.toLocaleString();
+          const transazioni = {
+            hash: txHash,
+            fr: from,
+            data: ts,
+          }
+          transactions.push(transazioni)
           console.log('block number : ', i, 'transaction', tx.hash, 'done on ', block.timestamp, ' from ', tx.from);
-          console.log(tx);
-         // const text = web3.eth.abi.decodeParameters(["string", "string", "string", "uint256"], tx.input);
-          return ({ txHash, from, ts })
+          // const text = web3.eth.abi.decodeParameters(["string", "string", "string", "uint256"], tx.input);
+          
         }
       }
     }
   }
+  console.log(transactions)
+  return (transactions)
 }
 export async function setRoom(address, owner, hashedFile, idRoom) {
   if (!isInitialized) {

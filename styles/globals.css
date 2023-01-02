@@ -6,3 +6,7 @@ main {
     height: 100%;
     margin: 5% 0;
 }
+
+scroll {
+    overflow: auto;
+}

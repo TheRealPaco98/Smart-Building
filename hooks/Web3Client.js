@@ -49,7 +49,6 @@ export async function getTransaction() {
         if (tx.to != null) {
           var receipt = await web3.eth.getTransactionReceipt(tx.hash)
           var log = receipt.logs[0]
-          console.log(log)
           var text = web3.eth.abi.decodeLog(["string","string"], log.data)
           var roomID = text[0]
           var accountID = text[1]
@@ -67,9 +66,6 @@ export async function getTransaction() {
             account: accountID
           }
           transactions.push(transazioni)
-          console.log('block number : ', i, 'transaction', tx.hash, 'done on ', block.timestamp, ' from ', tx.from);
-          // const text = web3.eth.abi.decodeParameters(["string", "string", "string", "uint256"], tx.input);
-          
         }
       }
     }

@@ -94,7 +94,7 @@ const AddPanel = ({onClosePanel}) => {
                 <input
                     type="text"
                     value={idRoom}
-                    onChange={($event) => setIdRoom($event.target.value)}
+                    onChange={($event) => setIdRoom($event.target.value.trim())}
                     placeholder="Insert Room ID"
                     className="input input-bordered input-secondary w-full max-w-xs"
                 />

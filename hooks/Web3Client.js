@@ -39,24 +39,32 @@ export const init = async () => {
 export async function getTransaction() {
   const web3 = new Web3(window.ethereum);
   let currentBlock =  await web3.eth.getBlockNumber();
-  console.log(currentBlock);
   var transactions = []
-  for (var i = currentBlock; i >= currentBlock-5; i--) {
+  for (var i = currentBlock; i >=currentBlock-1; i--) {
     var block = await web3.eth.getBlock(i);
     if (block != null) {
       if (block.transactions != null && block.transactions.length != 0) {
         var blockHash =  block.transactions;
         var tx = await web3.eth.getTransaction(blockHash);
         if (tx.to != null) {
-          console.log(transactions)
+          var receipt = await web3.eth.getTransactionReceipt(tx.hash)
+          var log = receipt.logs[0]
+          console.log(log)
+          var text = web3.eth.abi.decodeLog(["string","string"], log.data)
+          var roomID = text[0]
+          var accountID = text[1]
+          console.log("room id:",roomID, "account id:",accountID)
           var txHash = tx.hash;
           var from = tx.from;
           var date = new Date(block.timestamp*1000);
-          var ts = date.toLocaleString();
+          var ts = date.toLocaleString();          
+          
           const transazioni = {
             hash: txHash,
             fr: from,
             data: ts,
+            id: roomID,
+            account: accountID
           }
           transactions.push(transazioni)
           console.log('block number : ', i, 'transaction', tx.hash, 'done on ', block.timestamp, ' from ', tx.from);
@@ -69,6 +77,7 @@ export async function getTransaction() {
   console.log(transactions)
   return (transactions)
 }
+
 export async function setRoom(address, owner, hashedFile, idRoom) {
   if (!isInitialized) {
     await init();

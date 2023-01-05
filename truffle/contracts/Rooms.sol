@@ -2,7 +2,7 @@
 pragma solidity >=0.8.7;
 
 contract Rooms {
-    
+
     struct Room{
         string roomHash;
         string roomOwner;
@@ -25,4 +25,5 @@ contract Rooms {
     function getRoomInfo(string memory accountId) public view returns(Room[] memory) {
         return AllRooms[accountId];
     }
+    
 }

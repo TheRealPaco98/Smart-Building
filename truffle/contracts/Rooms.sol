@@ -2,18 +2,19 @@
 pragma solidity >=0.8.7;
 
 contract Rooms {
+    
     struct Room{
         string roomHash;
         string roomOwner;
         string  roomID;
     }
 
+    mapping (string => Room[]) AllRooms;
+
     event showID(
         string room,
         string account
     );
-
-    mapping (string => Room[]) AllRooms;
 
     function setRoomInfo(string memory accountId, string memory r_owner, string memory r_hash, string memory r_ID) public {
         Room memory room = Room({roomHash: r_hash, roomOwner: r_owner, roomID: r_ID});

@@ -36,41 +36,41 @@ export const init = async () => {
   isInitialized = true;
 }
 
-export async function getTransaction() {
+export async function getTransaction(requestAccountID) {
   const web3 = new Web3(window.ethereum);
   let currentBlock =  await web3.eth.getBlockNumber();
-  var transactions = []
-  for (var i = currentBlock; i >=currentBlock-4; i--) {
-    var block = await web3.eth.getBlock(i);
+  const transactions = []
+  for (let i = currentBlock; i >=currentBlock-4; i--) {
+    const block = await web3.eth.getBlock(i);
     if (block != null) {
-      if (block.transactions != null && block.transactions.length != 0) {
-        var blockHash =  block.transactions;
-        var tx = await web3.eth.getTransaction(blockHash);
+      if (block.transactions != null && block.transactions.length !== 0) {
+        const blockHash =  block.transactions[0];
+        const tx = await web3.eth.getTransaction(blockHash);
         if (tx.to != null) {
-          var receipt = await web3.eth.getTransactionReceipt(tx.hash)
-          var log = receipt.logs[0]
-          var text = web3.eth.abi.decodeLog(["string","string"], log.data)
-          var roomID = text[0]
-          var accountID = text[1]
-          console.log("room id:",roomID, "account id:",accountID)
-          var txHash = tx.hash;
-          var from = tx.from;
-          var date = new Date(block.timestamp*1000);
-          var ts = date.toLocaleString();          
-          
-          const transazioni = {
-            hash: txHash,
-            fr: from,
-            data: ts,
-            id: roomID,
-            account: accountID
+          const receipt = await web3.eth.getTransactionReceipt(tx.hash)
+          const log = receipt.logs[0]
+          const text = web3.eth.abi.decodeLog(["uint256","string"], log.data)
+          const roomID = text[0]
+          const accountID = text[1]
+          if (accountID === requestAccountID) {
+            const txHash = tx.hash;
+            const from = tx.from;
+            const date = new Date(block.timestamp*1000);
+            const ts = date.toLocaleString();
+
+            const transaction = {
+              hash: txHash,
+              fr: from,
+              data: ts,
+              id: roomID,
+              account: accountID
+            }
+            transactions.push(transaction)
           }
-          transactions.push(transazioni)
         }
       }
     }
   }
-  console.log(transactions)
   return (transactions)
 }
 

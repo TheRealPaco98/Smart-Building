@@ -22,6 +22,7 @@ const ContractInfo = () => {
     const getRoom = () => {
         getRoomInfo(address)
             .then((response) => {
+                console.log(response);
                 setContracts(response);
                 const obj = {};
                 for (const contract of response) {
@@ -35,13 +36,13 @@ const ContractInfo = () => {
             });
     }
 
-    const doGetTransaction = async () => {
-        setTransactions(await getTransaction());
+    const doGetTransaction = async (address) => {
+        setTransactions(await getTransaction(address));
     }
 
     const doShowTransaction = (roomID) => {
         setShowTransactionPanels({ ...showTransactionPanels, [roomID]: !showTransactionPanels[roomID] });
-        doGetTransaction();
+        doGetTransaction(address);
     }
 
     useEffect(() => {
@@ -96,9 +97,9 @@ const ContractInfo = () => {
                 </div>
 
                 <div>
-                    {showTransactionPanels[contract.roomID] &&
+                    {transactions && showTransactionPanels[contract.roomID] &&
                         <TransactionPanel
-                            transactions={transactions}
+                            transactions={transactions.filter(transaction => transaction.id === contract.roomID)}
                         />
                     }
                 </div>
@@ -108,13 +109,5 @@ const ContractInfo = () => {
     </div>
 
 }
-
-
-
-
-
-
-
-
 
 export default ContractInfo;

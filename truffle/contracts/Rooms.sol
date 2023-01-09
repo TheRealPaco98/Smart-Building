@@ -33,6 +33,10 @@ contract Rooms {
         }    
     }
 
+    function getRoomInfo(string memory accountId) public view returns(Room[] memory) {
+            return AllRooms[accountId];
+    }
+
     function checkId(string memory accountId, uint256 r_Id) public view returns (bool){ 
         Room[] memory arrayRooms = AllRooms[accountId];
         uint l = arrayRooms.length;
@@ -40,10 +44,6 @@ contract Rooms {
             if(arrayRooms[i].roomID == r_Id)
                 return true;
             return false;
-    }
-
-    function getRoomInfo(string memory accountId) public view returns(Room[] memory) {
-        return AllRooms[accountId];
     }
     
 }

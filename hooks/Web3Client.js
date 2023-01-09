@@ -40,7 +40,7 @@ export async function getTransaction(requestAccountID) {
   const web3 = new Web3(window.ethereum);
   let currentBlock =  await web3.eth.getBlockNumber();
   const transactions = []
-  for (let i = currentBlock; i >=currentBlock-4; i--) {
+  for (let i = currentBlock; i >=0; i--) {
     const block = await web3.eth.getBlock(i);
     if (block != null) {
       if (block.transactions != null && block.transactions.length !== 0) {

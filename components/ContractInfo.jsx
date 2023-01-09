@@ -65,7 +65,7 @@ const ContractInfo = () => {
                         </div>
 
                         <div className="text-center">
-                            <div className="mb-5">Hash</div>
+                            <div className="mb-5">CID</div>
                             <div className="px-2 py-1 rounded-full bg-secondary font-mono font-medium">
                                 {contract.roomHash}
                             </div>

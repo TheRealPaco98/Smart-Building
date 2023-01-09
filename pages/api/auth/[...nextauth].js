@@ -4,7 +4,7 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 export const authOptions = {
   theme: {
-    colorScheme: "auto", // "auto" | "dark" | "light"
+    colorScheme: "dark", // "auto" | "dark" | "light"
     brandColor: "", // Hex color code
     logo: "", // Absolute URL to image
     buttonText: "#346df1", // Hex color code
